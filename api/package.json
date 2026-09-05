@@ -1,0 +1,20 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/sabrineR/back-to-the-future#readme",
+  "bugs": {
+    "url": "https://github.com/sabrineR/back-to-the-future/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabrineR/back-to-the-future.git"
+  },
+  "license": "ISC",
+  "author": "Sabrine BEN SASSI",
+  "type": "commonjs",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
