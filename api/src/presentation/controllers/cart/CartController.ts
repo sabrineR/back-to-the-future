@@ -1,5 +1,4 @@
 import { Response } from 'express';
-
 import { BaseController } from '@/core/logic/BaseController';
 import { HttpRequestDto } from '@/presentation/http/HttpRequest';
 import { CreateCart } from '@/application/useCases/cart/CreateCart/CreateCartUseCase';
@@ -23,8 +22,8 @@ export class CartController extends BaseController {
         res: Response
     ): Promise<Response> => {
         try {
-            // TODO: After implementing authentication,
-            // get userId from req.user.id instead of req.body.
+            // Customer authentication is out of scope
+            // The cart can therefore be created without a userId.
             const result = await this.createCart.execute({
                 userId: req.body?.userId,
             });
@@ -49,11 +48,8 @@ export class CartController extends BaseController {
         res: Response
     ): Promise<Response> => {
         try {
-            // TODO: After implementing authentication:
-            // - Get userId from req.user.id when the user is authenticated.
-            // - Get guestId from cookies when the user is not authenticated.
-            // - Replace the temporary /user/:userId and /guest/:guestId routes
-            //   with a single GET /cart route.
+            // Guest carts are identified by guestId.
+            // User cart support is kept for a future customer authentication flow.
             const userId = req.params?.userId
                 ? Number(req.params.userId)
                 : undefined;
@@ -89,10 +85,7 @@ export class CartController extends BaseController {
         res: Response
     ): Promise<Response> => {
         try {
-            // TODO: After implementing authentication:
-            // - Get userId from req.user.id.
-            // - Get guestId from cookies.
-
+            // Customer authentication is intentionally not implemented in this scope.
             const userId = req.params?.userId
                 ? Number(req.params.userId)
                 : undefined;
