@@ -1,11 +1,8 @@
 import { Response, Request } from 'express';
-
 import { BaseController } from '@/core/logic/BaseController';
-
 import { CreateMovie } from '@/application/useCases/movie/CreateMovie/CreateMovieUseCase';
 import { CreateMovieRequestDto } from '@/application/useCases/movie/CreateMovie/CreateMovieRequestDto';
 import { MovieMap } from '@/domain/mappers/MovieMap';
-
 import { GetMovies } from '@/application/useCases/movie/GetMovies/GetMoviesUseCase';
 import { HttpRequestDto } from '@/presentation/http/HttpRequest';
 import { GetMovie } from '@/application/useCases/movie/GetMovieById/GetMovieByIdUseCase';

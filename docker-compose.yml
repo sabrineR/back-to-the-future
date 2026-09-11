@@ -1,0 +1,103 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bttf-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: bttf-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d bttf-db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  db-init:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: builder
+
+    env_file:
+      - ./api/.env
+
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      NODE_ENV: development
+
+    command: sh -c "npm run migrate && npm run seed"
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: runner
+
+    container_name: bttf-api
+    restart: unless-stopped
+
+    env_file:
+      - ./api/.env
+
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      NODE_ENV: development
+
+    ports:
+      - "4000:4000"
+
+    depends_on:
+      db:
+        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
+
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:4000/api/bttf
+
+    container_name: bttf-app
+    restart: unless-stopped
+
+    ports:
+      - "5173:80"
+
+    depends_on:
+      - api
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:4000/api/bttf
+
+    container_name: bttf-admin
+    restart: unless-stopped
+
+    ports:
+      - "5174:80"
+
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
