@@ -176,7 +176,7 @@ Create the API environment file from the provided example:
 
 ```bash
 cd api
-cp .env.example .env
+cp .env.default .env
 ```
 
 Then configure the required environment variables.
