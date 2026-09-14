@@ -35,19 +35,19 @@ A discount is applied to all Back to the Future DVDs in the cart depending on th
 
 ```text
 BTTF 1 + BTTF 2 + BTTF 3
-= €36
+= 36 €
 
 BTTF 1 + BTTF 3
-= €27
+= 27 €
 
 BTTF 1
 = €15
 
 BTTF 1 + BTTF 2 + BTTF 3 + BTTF 2
-= €48
+= 48 €
 
 BTTF 1 + BTTF 2 + BTTF 3 + La chèvre
-= €56
+= 56 €
 ```
 
 These business rules are covered by automated tests in the API.
